@@ -1,4 +1,3 @@
-```javascript
 /* =========================================
    MOBILE NAVIGATION
 ========================================= */
@@ -6,31 +5,51 @@
 const menuBtn = document.getElementById("menuBtn");
 const nav = document.getElementById("nav");
 
-menuBtn.addEventListener("click", () => {
+if (menuBtn && nav) {
 
-    nav.classList.toggle("active");
+    menuBtn.addEventListener("click", () => {
 
-});
+        nav.classList.toggle("active");
 
+        const isOpen =
+            nav.classList.contains("active");
 
-/* Close navigation after selecting a section */
-
-document.querySelectorAll(".nav a").forEach(link => {
-
-    link.addEventListener("click", () => {
-
-        nav.classList.remove("active");
+        menuBtn.setAttribute(
+            "aria-label",
+            isOpen
+                ? "Close navigation"
+                : "Open navigation"
+        );
 
     });
 
-});
+
+    /* Close navigation after selecting a section */
+
+    document.querySelectorAll(".nav a").forEach(link => {
+
+        link.addEventListener("click", () => {
+
+            nav.classList.remove("active");
+
+            menuBtn.setAttribute(
+                "aria-label",
+                "Open navigation"
+            );
+
+        });
+
+    });
+
+}
 
 
 /* =========================================
    CURRENT YEAR
 ========================================= */
 
-const yearElement = document.getElementById("year");
+const yearElement =
+    document.getElementById("year");
 
 if (yearElement) {
 
@@ -51,7 +70,7 @@ const navigationLinks =
     document.querySelectorAll(".nav a");
 
 
-window.addEventListener("scroll", () => {
+function updateActiveNavigation() {
 
     let current = "";
 
@@ -92,7 +111,13 @@ window.addEventListener("scroll", () => {
 
     });
 
-});
+}
+
+
+window.addEventListener(
+    "scroll",
+    updateActiveNavigation
+);
 
 
 /* =========================================
@@ -106,7 +131,10 @@ const revealElements =
         ".experience-metrics, " +
         ".expertise-card, " +
         ".education-item, " +
-        ".contact-link"
+        ".achievement-content, " +
+        ".language-list, " +
+        ".contact-link, " +
+        ".skills-section"
     );
 
 
@@ -163,6 +191,8 @@ const header =
 
 window.addEventListener("scroll", () => {
 
+    if (!header) return;
+
     if (window.scrollY > 50) {
 
         header.style.background =
@@ -176,4 +206,10 @@ window.addEventListener("scroll", () => {
     }
 
 });
-```
+
+
+/* =========================================
+   INITIALIZE
+========================================= */
+
+updateActiveNavigation();
